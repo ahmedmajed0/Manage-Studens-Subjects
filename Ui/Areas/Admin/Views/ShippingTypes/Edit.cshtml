@@ -1,0 +1,94 @@
+﻿@model ShippingTypeDto
+
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> @Shipping.ShippingTypes </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">@Shipping.ShippingTypes</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Lables.AddNew</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row grid-margin">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@Shipping.ShippingTypes</h4>
+
+                    <form  method="post" role="form" enctype="multipart/form-data"
+                          asp-controller="ShippingTypes" asp-action="Save">
+                        <div class="row">
+                            <input asp-for="Id" type="hidden" />
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label class="col-form-label">@Lables.NameAr</label>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input asp-for="ShippingTypeAname" class="form-control" maxlength="25" id="defaultconfig" type="text" placeholder="@Lables.NameAr">
+                                        <span asp-validation-for="ShippingTypeAname" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label class="col-form-label">@Lables.NameEn</label>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input asp-for="ShippingTypeEname" class="form-control" maxlength="20" id="defaultconfig-2" type="text" placeholder="@Lables.NameEn">
+                                        <span asp-validation-for="ShippingTypeEname" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label class="col-form-label">@Shipping.Factor</label>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input asp-for="ShippingFactor" class="form-control" maxlength="4"  id="defaultconfig-3" type="number" placeholder="@Shipping.Factor">
+                                        <span asp-validation-for="ShippingFactor" class="text-danger"></span>
+                                    </div>
+                                </div>
+@*                                 <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label class="col-form-label">Text Area</label>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <textarea id="maxlength-textarea" class="form-control" maxlength="100" rows="2" placeholder="This textarea has a limit of 100 chars."></textarea>
+                                    </div>
+                                </div> *@
+                            </div>
+
+                            
+
+                        </div>
+                        <button type="submit" class="btn btn-gradient-primary">@Actions.Save</button>
+                        <button type="reset" class="btn btn-light btn-fw">@Actions.Reset</button>
+
+                     </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/vendors/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/Admin/vendors/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+    <script src="~/Admin/js/form-validation.js"></script>
+    <script src="~/Admin/js/bt-maxLength.js"></script>
+    <!-- End custom js for this page -->
+
+    <partial name="_ValidationScriptsPartial" />
+
+
+}

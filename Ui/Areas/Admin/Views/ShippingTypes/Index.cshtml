@@ -1,0 +1,133 @@
+﻿@using AppResources.Messages
+@section Styles {
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <!-- End plugin css for this page -->
+}
+
+@model List<ShippingTypeDto>
+
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> Data table </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">@Shipping.ShippingTypes</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Shipping.AllShippingTypes</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">@Shipping.ShippingTypes</h4>
+            <div class="row">
+                <div class="col-12">
+                    <div id="order-listing_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 table-responsive">
+                                <a asp-controller="ShippingTypes" asp-action="Edit" class="btn btn-success btn-fw">@Lables.AddNew</a>
+                                <table id="order-listing" class="table dataTable no-footer" aria-describedby="order-listing_info">
+                                    <thead>
+                                        <tr>
+                                            <th class="sorting sorting_asc" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Order #: activate to sort column descending" style="width: 74.4875px;">@Lables.NameAr</th>
+                                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Purchased On: activate to sort column ascending" style="width: 122.488px;">@Lables.NameEn</th>
+                                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 89.15px;">@Shipping.Factor</th>
+                                            <th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 75.3625px;">@Lables.Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach(var type in Model)
+                                        {
+                                            <tr class="odd">
+                                                <td class="sorting_1">@type.ShippingTypeAname</td>
+                                                <td>@type.ShippingTypeEname</td>
+                                                <td>@type.ShippingFactor</td>
+
+                                                <td>
+                                                    <a class="btn btn-info btn-fw p-3"
+                                                       asp-controller="ShippingTypes" asp-action="Edit" asp-route-id="@type.Id">@Actions.Edit</a>
+@*                                                     <a class="btn btn-danger btn-fw p-3 "
+                                                       asp-controller="ShippingTypes" asp-action="Delete" asp-route-id="@type.Id">@Actions.Delete</a> *@
+
+                                                    <button type="button" class="btn btn-danger btn-fw p-3" data-id="@type.Id">@Actions.Delete </button>
+                                                </td>
+
+                                            </tr>
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/Admin/js/data-table.js"></script>
+    <!-- End plugin js for this page -->
+
+
+    <script>
+        $(document).ready(function () {
+            $('.btn-danger').on('click', function (e) {
+                var id = $(this).data('id');
+                var deleteUrl = '@Url.Action("Delete", "ShippingTypes")';
+
+                alert.DeleteConfirmation(function (result) {
+                    if (result) {
+                        // Redirect to delete action with the Id
+                        window.location.href = deleteUrl + '/' + id;
+                    }
+                });
+            });
+        });
+    </script>
+
+    @if(TempData["MessageType"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                let messageType = @TempData["MessageType"];
+
+                    switch (messageType) {
+                        case 1:
+                            alert.Success('@Messages.SaveSuccessTitle', '@Messages.SaveSuccessMessage');
+                            break;
+                        case 2:
+                            alert.Error('@Messages.SaveFailedTitle', '@Messages.SaveFailedMessage');
+                            break;
+                        case 3:
+                            alert.Success('@Messages.DeleteSuccessTitle', '@Messages.DeleteSuccessMessage');
+                            break;
+                        case 4:
+                            alert.Error('@Messages.DeleteFailedTitle', '@Messages.DeleteFailedMessage');
+                            break;
+                        case 5:
+                            alert.Error('@Messages.ValidationErrorTitle', '@Messages.ValidationErrorMessage');
+                            break;
+                        default:
+                            console.log("Unknown message type");
+                            break;
+                    }
+
+            });
+
+        </script>
+    }
+}
